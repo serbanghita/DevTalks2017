@@ -1,0 +1,22 @@
+{
+  "name": "devtalks2017",
+  "version": "1.0.0",
+  "description": "Prezentarea de la DevTalks2017",
+  "main": "index.js",
+  "scripts": {
+    "serve": "$(npm bin)/browser-sync start --s dist --f dist --port 5500 --reload-debounce 1500 --no-ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serbanghita/DevTalks2017.git"
+  },
+  "author": "Serban Ghita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serbanghita/DevTalks2017/issues"
+  },
+  "homepage": "https://github.com/serbanghita/DevTalks2017#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.12"
+  }
+}

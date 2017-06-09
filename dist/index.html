@@ -1,0 +1,433 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>DevTalks 2017</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.section-title {
+				font-size: 1em;
+				font-weight: bold;
+				text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
+			}
+			.summary {
+				font-size: 1em;
+			}
+			.summary li {
+				font-size: 0.8em;
+			}
+			.jsBold { color:#F0DB4F !important; font-weight: bold; }
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="fade-in">
+					<p class="section-title">How I learned JavaScript/TypeScript by <br>making and playing a HTML5 game</p>
+					<div>
+						<img src="img/ts.png" width="100" style="border:none; box-shadow: none;">
+						<img src="img/js.png" width="100" style="border:none; box-shadow: none;">
+						<img src="img/html5-canvas.png" width="100" style="border:none; box-shadow: none;">
+						<img src="img/nodejs.png" width="100" style="border:none; box-shadow: none;">
+					</div>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Good morning!</p>
+				</section>
+
+				<section  data-transition="fade-in" data-background="img/raising_hands.png" data-background-size="500px" data-background-position="bottom">
+					<p class="section-title">Şerban Ghiţă</p>
+					<ul>
+						<li>sghita@adobe.com</li>
+						<li><span><a href="http://serban.ghita.org">http://serban.ghita.org</a></span></li>
+						<li><span><a href="http://github.com/serbanghita">http://github.com/serbanghita</a></span></li>
+						<li><span><a href="http://twitter.com/serbanghita">@serbanghita</a></span></li>
+					</ul>
+				</section>
+				<section data-transition="fade-in" data-background="img/serban.ghita.org.png" data-background-size="800px" data-transition="fade-in">
+
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Summary</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<ol class="summary">
+						<li>Motivation</li>
+						<li>JavaScript</li>
+						<li>TypeScript</li>
+						<li>Setup (npm, cli, Gulp, etc)
+							<ul>
+								<li>Module loaders (CommonJS, AMD, SystemJS)</li>
+								<li>Circular dependency</li>
+							</ul>
+						</li>
+						<li>JavaScript case-studies
+							<ul>
+								<li>Promises</li>
+								<li>Decorators</li>
+								<li>Custom Elements</li>
+								<li>rAF vs setTimeout</li>
+							</ul>
+						</li>
+						<li>
+							The Game
+							<ul>
+								<li>Canvas 2d with examples</li>
+								<li>WebSockets</li>
+								<li>Deploying</li>
+								<li>Demo</li>
+							</ul>
+						</li>
+
+					</ol>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Motivation</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<a href="https://www.amazon.com/Actionable-Gamification-Beyond-Points-Leaderboards/dp/1511744049">
+						<img src="img/gamification-book.jpg" height="600">
+					</a>
+				</section>
+
+				<section data-transition="fade-in">
+					<a href="https://insights.stackoverflow.com/survey/2017#technology" target="_blank"><img src="img/so-typescript-survey.png" height="600"></a>
+				</section>
+
+				<section data-transition="fade-in">
+					<ul>
+						<li>Experiment.</li>
+						<li>Have fun.</li>
+						<li>Keep it simple.</li>
+						<li>Build a product.</li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="https://goo.gl/ZNuMvy">https://goo.gl/ZNuMvy</a></p>
+					<p><img src="img/qr.png"></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">JavaScript</p>
+				</section>
+
+				<section data-transition="fade-in" data-background="img/Brendan_Eich.png" data-background-size="500px" data-background-position="bottom left">
+					<ul>
+						<li><em><a href="https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%201st%20edition,%20June%201997.pdf">ECMAScript 1</a>:</em> Jun 1997</li>
+						<li><em><a href="https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%202nd%20edition,%20August%201998.pdf">ECMAScript 2</a>:</em> Aug 1998</li>
+						<li><em><a href="http://www-archive.mozilla.org/js/language/E262-3.pdf">ECMAScript 3</a>:</em> Mar 2000</li>
+						<li><em><a href="https://www.ecma-international.org/activities/Languages/Language%20overview.pdf">ECMAScript 4</a>:</em> Proposal on Oct 2007</li>
+						<li><em><a href="https://www.ecma-international.org/ecma-262/5.1/">ECMAScript 5.1</a>(aka <span class="jsBold">ES5</span>) :</em> Jun 2011</li>
+						<li><em><a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript 6</a> (aka <span class="jsBold">ES6</span>, ES 2015):</em> Jun 2015</li>
+						<li><em><a href="https://www.ecma-international.org/ecma-262/7.0/">ECMAScript 7</a> (aka ES7):</em> June 2016</li>
+					</ul>
+
+					<p><a href="http://kangax.github.io/compat-table/es6/">Compatibility</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="https://github.com/lukehoban/es6features">https://github.com/lukehoban/es6features</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p>Challenges</p>
+					<ul>
+						<li>Migrating code from <span class="jsBold">ES5</span> to <span class="jsBold">ES6</span>.</li>
+						<li>Keep your taxonomy simple.</li>
+						<li>Avoid complex build systems.</li>
+						<li>Avoid boilerplate code.</li>
+						<li>Class definitions.</li>
+						<li>Class inheritance.</li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in">
+					<a href="https://www.amazon.com/dp/B018D12X0C/"><img src="img/what-every-js-dev-book.jpg" height="500"></a>
+					<a href="https://www.amazon.com/dp/B00I87B1H8/"><img src="img/principles-of-oop-book.jpg" height="500"></a>
+				</section>
+
+				<section data-transition="fade-in">
+					<p>Class definition</p>
+					<p>
+						<a href="playground/class_definition_es5_1.html" target="_blank">class_definition_es5_1.html</a>
+						<a href="playground/class_definition_es5_2.html" target="_blank">class_definition_es5_2.html</a>
+						<a href="playground/class_definition_es5_3.html" target="_blank">class_definition_es5_3.html</a>
+						<a href="playground/class_definition_es5_4.html" target="_blank">class_definition_es5_4.html</a>
+					</p>
+					<p>
+						<a href="playground/class_definition_es6.html" target="_blank">class_definition_es6.html</a>
+					</p>
+					<!-- https://www.youtube.com/watch?v=taaEzHI9xyY#t=2020s -->
+				</section>
+
+				<section data-transition="fade-in">
+					<p>Class inheritance</p>
+					<p>
+						<a href="playground/class_inheritance_es5.html" target="_blank">class_inheritance_es5.html</a>
+						<a href="playground/class_inheritance_es6.html" target="_blank">class_inheritance_es6.html</a>
+					</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><code>Object.constructor.name</code></p>
+					<p>SO: <a href="https://stackoverflow.com/questions/10314338/get-name-of-object-or-class-in-javascript/40250248#40250248">Get name of object or class in javascript</a></p>
+				</section>
+
+				<section data-markdown="playground/js/proto.md" data-transition="fade-in">
+				</section>
+
+				<section data-transition="fade-in">
+					<p>Other challenges</p>
+					<ul>
+						<li>Project got bigger.</li>
+						<li>Forgetting stuff.</li>
+						<li>Linting was not enough.</li>
+					</ul>
+
+					<p>See: <a href="https://github.com/serbanghita/Game">Game git repo history</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">TypeScript</p>
+				</section>
+
+				<section data-transition="fade-in" data-background="img/anders-hejlsberg.png" data-background-size="400px" data-background-position="bottom right">
+					<ul>
+						<li><a href="https://typescript.codeplex.com/releases/view/95554" target="_blank">First 0.8.0</a>: Oct 2012</li>
+						<li><a href="http://blogs.msdn.com/b/typescript/archive/2014/10/06/announcing-typescript-1-1-ctp.aspx">1.1.0.1</a>: Oct 2014</li>
+						<li><a href="https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#typescript-18">1.8 Beta</a>: Jan 2016</li>
+						<li><a href="https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#typescript-18">1.8 Beta</a>: Jan 2016</li>
+						<li><a href="https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#typescript-20">2.0.3</a>: Sept 2016</li>
+						<li><a href="https://github.com/Microsoft/TypeScript/releases/tag/v2.3.4">2.3.4</a>: May 2017</li>
+					</ul>
+
+					<p><code>npm install -g typescript</code></p>
+				</section>
+
+				<section data-transition="fade-in" data-background="img/anders-hejlsberg.png" data-background-size="400px" data-background-position="bottom right">
+					<p>Anders Hejlsberg</p>
+					<blockquote style="font-size:0.5em;">He was the original author of <b>Turbo Pascal</b> and the chief architect
+						of <b>Delphi</b>. <br>He currently works for Microsoft as the lead architect of <b>C#</b> and core developer on TypeScript.
+						<br>From <a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg">Wikipedia</a>.</blockquote>
+				</section>
+
+				<section data-transition="fade-in">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/IRunqezn4pQ?rel=0" frameborder="0" allowfullscreen></iframe>
+				</section>
+
+				<section data-transition="fade-in">
+					<img src="img/Delphi1d.gif" width="315">
+
+					<p style="font-size:0.5em;">Source: <a href="http://www.blong.com/undocumented/Delphi1.htm">Delphi1 easter eggs</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<ul>
+						<li>superset of <span class="jsBold">ES6</span></li>
+						<li>static typing</li>
+						<li>class based OOP</li>
+						<li>transpiles or transcompiles</li>
+						<li>open-source</li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in" data-background="img/bg-typescript.svg" data-background-size="800px" data-background-position="bottom">
+					<p><a href="http://www.typescriptlang.org/play/" target="_blank">TypeScript Playground</a></p>
+					<p><a href="playground/class_inheritance_ts.html" target="_blank">class_inheritance_ts.html</a>
+						<a href="playground/class_inheritance_statics_ts.html" target="_blank">class_inheritance_statics_ts.html</a></p>
+				</section>
+
+
+				<section data-transition="fade-in">
+					<p class="section-title">Setup</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="https://github.com/serbanghita/TypeScript-Builds" target="_blank">https://github.com/serbanghita/TypeScript-Builds</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<b>CommonJS, AMD, SystemJS, ES6 modules</b>
+					<ul>
+						<li>Client-side modules require a build step.</li>
+						<li>Everything started from the module pattern.</li>
+						<li>Beware of <a href="https://github.com/pahen/madge" target="_blank">circular dependencies</a></li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in" data-markdown="playground/md/commonjs.md"></section>
+				<section data-transition="fade-in" data-markdown="playground/md/amd.md"></section>
+				<section data-transition="fade-in" data-markdown="playground/md/systemjs.md"></section>
+				<section data-transition="fade-in" data-markdown="playground/md/es6modules.md"></section>
+
+				<section data-transition="fade-in">
+					<img src="img/browserify-webpack.png" width="600">
+					<p><a href="http://browserify.org">browserify.org</a> /
+					<a href="https://webpack.github.io">webpack.github.io</a></p>
+
+					<p style="font-size:0.5em;">require('modules') in the browser</p>
+					<p><code style="font-size:0.5em;">browserify src/game.ts --debug -p tsify -o dist/js/game.src.js</code></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<a href="https://github.com/niieani/typescript-vs-flowtype">
+						Compare TypeScript with Flow
+					</a>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">JavaScript case-studies</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Promises</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">understanding async/await in 7 seconds <a href="https://t.co/IJOQJ2DR35">pic.twitter.com/IJOQJ2DR35</a></p>&mdash; Wassim Chegham シ (@manekinekko) <a href="https://twitter.com/manekinekko/status/855824609299636230">April 22, 2017</a></blockquote>
+					<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="playground/promise/promise_imgload.html">promise_imgload.html</a>, <a href="playground/promise/promise_xhr.html">promise_xhr.html</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><b>Promise libs</b></p>
+					<ul>
+						<li><a href="https://github.com/kriskowal/q">Q</a></li>
+						<li><a href="https://github.com/stefanpenner/es6-promise">ES6 Promise polyfill</a></li>
+						<li><a href="https://msdn.microsoft.com/en-us/library/windows/apps/br211867.aspx">WinJS.Promise</a></li>
+					</ul>
+
+					<p style="font-size:0.5em;">SO: <a href="https://stackoverflow.com/questions/35723246/promises-cancel-method-why-its-not-implemented-yet-as-opposed-to-other-promise">Promise cancel method.</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<img src="img/programming-win-store-book.jpg" height="500">
+					<p><a href="https://blogs.msdn.microsoft.com/microsoft_press/2014/04/08/free-ebook-programming-windows-store-apps-with-html-css-and-javascript-second-edition/">Programming Windows Store Apps with HTML, CSS, and JavaScript, Second Edition</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Decorators</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<ul>
+						<li>memoization</li>
+						<li>access control</li>
+						<li>authentication</li>
+						<li>timing</li>
+						<li>logging</li>
+						<li>rate-limiting</li>
+						<li>etc.</li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in">
+					Same signature as <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a></code>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="https://jsbin.com/fopiteg/edit?js,console" target="_blank">Method decorator demo</a></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/d8CDFsQHZpE?rel=0" frameborder="0" allowfullscreen></iframe>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">Custom Elements</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><b>Specs</b></p>
+					<ul>
+						<li><a href="https://www.w3.org/TR/2016/WD-custom-elements-20160226/">v0</a>: proposed by Google</li>
+						<li><a href="https://www.w3.org/TR/custom-elements/">v1</a>: WHATWG Standard</li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><b>Polyfills</b></p>
+					<ul>
+						<li><a href="https://github.com/WebReflection/document-register-element">https://github.com/WebReflection/document-register-element</a></li>
+						<li><a href="https://github.com/webcomponents/webcomponentsjs">https://github.com/webcomponents/webcomponentsjs</a></li>
+					</ul>
+				</section>
+
+				<section data-transition="fade-in">
+					<a href="https://github.com/serbanghita/CustomElements-PlayGround">CustomElements-PlayGround</a>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">rAF vs setTimeout</p>
+				</section>
+
+				<section data-transition="fade-in" data-markdown="playground/raf/settimeout.md"></section>
+				<section data-transition="fade-in" data-markdown="playground/raf/raf.md"></section>
+				<section data-transition="fade-in" data-markdown="playground/raf/drawing.md"></section>
+
+				<section data-transition="fade-in">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/8aGhZQkoFbQ?rel=0" frameborder="0" allowfullscreen></iframe>
+				</section>
+
+				<section data-transition="fade-in">
+					<p class="section-title">back to the Game</p>
+				</section>
+
+				<section data-transition="fade-in">
+					<p><a href="https://goo.gl/ZNuMvy">https://goo.gl/ZNuMvy</a></p>
+					<p><img src="img/qr.png"></p>
+				</section>
+
+				<section data-transition="fade-in">
+					<h1>Thank you!</h1>
+				</section>
+
+				<!-- http://es6-features.org/#ClassDefinition -->
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

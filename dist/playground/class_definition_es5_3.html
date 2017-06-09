@@ -1,0 +1,22 @@
+<script>
+    var Shape = {
+        id: "",
+        x: 0,
+        y: 0,
+        init: function(id, x, y) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+
+            return this;
+        },
+        moveTo: function(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+    };
+    var a = Object.create(Shape).init("bullet", 100, 100);
+
+    console.log(a);
+
+</script>

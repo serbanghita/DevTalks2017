@@ -1,0 +1,16 @@
+<script>
+    var Shape =  function(id, x, y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+
+        this.moveTo = function(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+    };
+
+    var a = new Shape("bullet", 100, 100);
+
+    console.log(a);
+</script>

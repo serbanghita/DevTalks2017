@@ -1,0 +1,48 @@
+<script>
+//    let loadImg = (src) => {
+//        let img = new Image();
+//        img.onload = () => {
+//            let $img = document.createElement("img");
+//            $img.src = src;
+//            $img.width = 100;
+//            document.body.appendChild($img);
+//        }
+//        img.src = src;
+//    };
+
+//    loadImg("https://avatars2.githubusercontent.com/u/1106849?v=3&s=460");
+//    loadImg("https://avatars3.githubusercontent.com/u/1594303?v=3&s=460");
+
+    let loadImg = (src) => {
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            img.onload = () => {
+                if (img.width === 0 && img.width === 0) {
+                    reject("Error width is creepy!");
+                    return;
+                }
+                let $img = document.createElement("img");
+                $img.src = src;
+                $img.width = 100;
+                document.body.appendChild($img);
+                resolve("Done!");
+            };
+            img.onerror = () => {
+                reject("Error, failed request!");
+            };
+            img.src = src;
+        });
+    }
+
+    let result = Promise.all([
+        loadImg("https://avatars2.githubusercontent.com/u/1106849?v=3&s=460"),
+        loadImg("https://avatars3.githubusercontent.com/u/1594303?v=3&s=460"),
+        loadImg("https://avatars2.githubusercontent.com/u/25904258?v=3&s=460"),
+        loadImg("https://github.com/favicon.icu").then(null, (error) => {console.log(error); return error;})
+    ]);
+
+    result.then((all) => console.log(all));
+
+
+
+</script>

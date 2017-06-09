@@ -1,0 +1,42 @@
+<script>
+//    let loadUrl = (url, cb) => {
+//        let xhr = new XMLHttpRequest();
+//        xhr.open("GET", url, true);
+//        xhr.onload = () => {
+//            if (xhr.readyState === 4) {
+//                if (xhr.status === 200) {
+//                    cb({status: xhr.status, response: xhr.responseText});
+//                } else {
+//                    cb({status: xhr.status, response: xhr.responseText});
+//                }
+//            }
+//        };
+//        xhr.send();
+//    };
+//
+// loadUrl("https://api.github.com/users/serbanghita/gists", (response) => console.log(response));
+
+    let loadUrl = (url) => {
+        return new Promise((resolve, reject) => {
+           let xhr = new XMLHttpRequest();
+           xhr.open("GET", url, true);
+           xhr.onload = () => {
+               if (xhr.readyState === 4) {
+                   if (xhr.status === 200) {
+                       resolve({status: xhr.status, response: xhr.responseText});
+                   } else {
+                       reject({status: xhr.status, response: xhr.responseText});
+                   }
+               }
+           }
+           xhr.send();
+        });
+    };
+
+    loadUrl("https://api.github.com/users/serbanghita/aa")
+        .then(
+            (response) => console.log("OK!", response),
+            (error) => console.log("Error", error)
+        );
+
+</script>
